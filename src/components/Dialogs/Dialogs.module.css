@@ -1,0 +1,53 @@
+.dialogs {
+	display: grid;
+	grid-template-columns: 250px 750px;
+	justify-content: space-between;
+}
+
+.dialogsItems {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	padding: 15px;
+	background-color: #ffffff;
+	border-radius: 5px 0 0 5px;
+}
+
+.dialogsItems .dialog.active {
+	color: gold;
+	font-weight: bold;
+}
+
+.dialog {
+	margin-bottom: 10px;
+}
+
+.dialog:last-child {
+	margin-bottom: 0;
+}
+
+.dialog a {
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	align-items: center;
+	text-decoration: none;
+	color: #3f414d;
+}
+
+.dialog img {
+	width: 40px;
+	height: 40px;
+	border-radius: 5px;
+	background-color: #cccccc;
+}
+
+.messages {
+	display: grid;
+	align-content: space-between;
+	padding: 15px;
+	background-image: url(../../assets/images/100.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 0 5px 5px 0;
+}
