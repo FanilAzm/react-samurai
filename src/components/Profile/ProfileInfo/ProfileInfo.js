@@ -10,6 +10,7 @@ import instagramIcon from '../../../assets/images/social/instagram.png';
 import githubIcon from '../../../assets/images/social/github.png';
 import yesJob from '../../../assets/images/social/yes.png';
 import noJob from '../../../assets/images/social/no.png';
+import ProfileStatus from './ProfileStatus/ProfileStatus';
 
 
 const ProfileInfo = (props) => {
@@ -42,6 +43,7 @@ const ProfileInfo = (props) => {
 					<div className={s.avatar}>
 						<img src={props.profile.photos.small ? null : userPhoto} />
 						<h3 className={s.name}>{props.profile.fullName}</h3>
+						<ProfileStatus status="This is profile status" />
 					</div>
 					<div>
 						<span>Поиск работы:</span>

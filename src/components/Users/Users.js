@@ -2,7 +2,6 @@ import React from 'react';
 import s from './Users.module.css';
 import UserImg from '../../assets/images/user.png';
 import { NavLink } from 'react-router-dom';
-import {usersAPI} from '../../api/api';
 
 const Users = (props) => {
 	let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -13,25 +12,11 @@ const Users = (props) => {
 		}
 
 		const deleteRequest = (userId) => {
-			props.toggleFollowingProgress(true, userId);
-			usersAPI.deleteUser(userId)
-				.then(data => {
-					if(data.resultCode === 0) {
-						props.unfollow(userId)
-					}
-					props.toggleFollowingProgress(false, userId);
-				})
+			props.unfollow(userId);
 		}
 
 		const postRequest = (userId) => {
-			props.toggleFollowingProgress(true, userId);
-			usersAPI.postUser(userId)
-				.then(data => {
-					if(data.resultCode === 0) {
-						props.follow(userId)
-					}
-					props.toggleFollowingProgress(false, userId);
-				})
+			props.follow(userId);
 		}
 
 		return(

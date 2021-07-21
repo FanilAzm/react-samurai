@@ -32,3 +32,10 @@
 	grid-template-columns: 1fr 2fr 1fr;
 	align-items: center;
 }
+
+.status {
+	position: absolute;
+	left: 10px;
+	bottom: 30%;
+	color: #ffffff;
+}
