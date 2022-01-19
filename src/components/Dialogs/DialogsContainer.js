@@ -3,10 +3,17 @@ import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import withAuthRedirect from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
+import { getDialogsPageState } from '../../redux/selectors/dialogs-selectors';
+
+// const mapStateToProps = (state) => {
+// 	return {
+// 		state: state.dialogsPage
+// 	}
+// }
 
 const mapStateToProps = (state) => {
 	return {
-		state: state.dialogsPage
+		state: getDialogsPageState(state)
 	}
 }
 

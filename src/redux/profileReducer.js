@@ -1,16 +1,17 @@
 import {profileAPI} from '../api/api';
 
-const ADD_POST = 'ADD-POST';
-const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
-const SET_USERS_PROFILE = 'SET_USERS_PROFILE';
+const ADD_POST = 'samurai-network/profile/ADD-POST';
+const SET_USERS_PROFILE = 'samurai-network/profile/SET_USERS_PROFILE';
+const SET_STATUS = 'samurai-network/profile/SET_STATUS';
+const DELETE_POST = 'samurai-network/profile/DELETE_POST';
 
 let initialState = {
 	posts: [
 		{id: 1, message: "Hi, how are you?", likeCount: "15"},
 		{id: 2, message: "It's my first post", likeCount: "20"}
 	],
-	newPostText: '',
-	profile: null
+	profile: null,
+	status: ''
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -18,7 +19,7 @@ const profileReducer = (state = initialState, action) => {
 		case ADD_POST: {
 			const newPost = {
 				id: 3,
-				message: state.newPostText,
+				message: action.newPostText,
 				likeCount: 0
 			}
 			
@@ -28,16 +29,22 @@ const profileReducer = (state = initialState, action) => {
 				posts: [...state.posts, newPost]
 			};
 		}
-		case UPDATE_POST_TEXT: {
-			return {
-				...state,
-				newPostText: action.newText
-			};
-		}
 		case SET_USERS_PROFILE: {
 			return {
 				...state,
 				profile: action.profile
+			}
+		}
+		case SET_STATUS: {
+			return {
+				...state,
+				status: action.status
+			}
+		}
+		case DELETE_POST: {
+			return {
+				...state,
+				posts: state.posts.filter(p => p.id != action.postId)
 			}
 		}
 		default: {
@@ -46,17 +53,31 @@ const profileReducer = (state = initialState, action) => {
 	}
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST});
-export const changePostTextActionCreator = (text) => ({type: UPDATE_POST_TEXT, newText: text});
+export const addPostActionCreator = (newPostText) => ({type: ADD_POST, newPostText});
 export const setUsersProfile = (profile) => ({type: SET_USERS_PROFILE, profile});
+export const setStatus = (status) => ({type: SET_STATUS, status});
+export const deletePostActionCreator = (postId) => ({type: DELETE_POST, postId});
 
-export const getProfile = (userId) => {
-	return (dispatch) => [
-		profileAPI.getProfileUser(userId)
-      .then(data => {
-        dispatch(setUsersProfile(data));
-      })
-	]
+export const getProfile = (userId) => async (dispatch) => {
+	let data = await profileAPI.getProfileUser(userId);
+		
+	dispatch(setUsersProfile(data));
+		
+}
+
+export const getStatus = (userId) => async (dispatch) => {
+	let data = await profileAPI.getStatus(userId);
+		
+	dispatch(setStatus(data));
+		
+}
+
+export const updateStatus = (status) => async (dispatch) => {
+	let data = await profileAPI.updateStatus(status);
+		
+	if(data.resultCode === 0) {
+		dispatch(setStatus(status));
+	}
 }
 
 export default profileReducer;
