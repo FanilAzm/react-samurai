@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import NavBar from './components/NavBar/NavBar';
-import ProfileContainer from './components/Profile/ProfileContainer';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -16,6 +14,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import {initialized} from './redux/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
+import store from './redux/redux-store';
+import {Provider} from 'react-redux';
+import withSuspense from './hoc/withSuspense';
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
 class App extends React.Component {
   componentDidMount() {
@@ -35,12 +38,12 @@ class App extends React.Component {
           <div className="app-wrapper-content">
             <Route
               path="/profile/:userId?"
-              render={ () => <ProfileContainer/> }
+              render={ withSuspense(ProfileContainer) }
             />
             <Route
               exact
               path="/dialogs"
-              render={ () => <DialogsContainer/> }
+              render={ withSuspense(DialogsContainer) }
             />
             <Route
               path="/users"
@@ -62,6 +65,18 @@ const mapStateToProps = (state) => ({
   initialized: state.app.initialized
 });
 
-export default compose(
+const AppContainer = compose(
   connect(mapStateToProps, {initialized})
 )(App);
+
+const SamuraiJSApp = (props) => {
+  return(
+    <React.StrictMode>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </React.StrictMode>
+  )
+}
+
+export default SamuraiJSApp;
