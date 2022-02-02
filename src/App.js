@@ -8,7 +8,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import Login from './components/Login/Login';
 import OnlineUsers from './components/OnlineUsers/OnlineUsers';
-import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import { HashRouter, Route, withRouter } from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -31,7 +31,7 @@ class App extends React.Component {
     }
 
     return (
-      <BrowserRouter>
+      <HashRouter>
         <div className="app-wrapper">
           <HeaderContainer />
           <NavBar />
@@ -56,7 +56,7 @@ class App extends React.Component {
           </div>
           <OnlineUsers />
         </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }

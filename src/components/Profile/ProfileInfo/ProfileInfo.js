@@ -18,6 +18,12 @@ const ProfileInfo = (props) => {
 		return <Preloader />
 	}
 
+	const onMainPhotosSelected = (e) => {
+		if(e.target.files.length) {
+			props.savePhoto(e.target.files[0]);
+		}
+	}
+
 	return(
 		<div>
 			<div className={s.header}>
@@ -41,7 +47,8 @@ const ProfileInfo = (props) => {
 						</NavLink>
 					</div>
 					<div className={s.avatar}>
-						<img src={props.profile.photos.small ? null : userPhoto} />
+						<img src={props.profile.photos.large || userPhoto} />
+						{props.isOwner && <input type={"file"} onChange={onMainPhotosSelected} />}
 						<h3 className={s.name}>{props.profile.fullName}</h3>
 						<ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
 					</div>
