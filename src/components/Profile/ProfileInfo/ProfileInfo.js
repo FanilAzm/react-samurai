@@ -10,6 +10,7 @@ import instagramIcon from '../../../assets/images/social/instagram.png';
 import githubIcon from '../../../assets/images/social/github.png';
 import yesJob from '../../../assets/images/social/yes.png';
 import noJob from '../../../assets/images/social/no.png';
+import iconEdit from '../../../assets/images/icon-edit.png';
 import ProfileStatusWithHooks from './ProfileStatus/ProfileStatus';
 
 
@@ -18,6 +19,7 @@ const ProfileInfo = (props) => {
 		return <Preloader />
 	}
 
+	console.log(props.profile);
 	const onMainPhotosSelected = (e) => {
 		if(e.target.files.length) {
 			props.savePhoto(e.target.files[0]);
@@ -46,9 +48,19 @@ const ProfileInfo = (props) => {
 							<img src={githubIcon} />
 						</NavLink>
 					</div>
-					<div className={s.avatar}>
-						<img src={props.profile.photos.large || userPhoto} />
-						{props.isOwner && <input type={"file"} onChange={onMainPhotosSelected} />}
+					<div>
+						<div className={s.avatar}>
+							<img className={s.profileImg} src={props.profile.photos.large || userPhoto} />
+							{
+								props.isOwner && 
+								<label className={s.fileUpload}>
+									<input type={"file"} onChange={onMainPhotosSelected} />
+									<div className={s.fileUploadCustom}>
+										<img src={iconEdit} />
+									</div>
+								</label>
+							}
+						</div>
 						<h3 className={s.name}>{props.profile.fullName}</h3>
 						<ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
 					</div>

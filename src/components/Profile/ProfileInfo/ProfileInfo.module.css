@@ -10,8 +10,13 @@
 	width: 100%;
 	height: 250px;
 }
-
-.avatar img{
+.avatar .fileUpload {
+	opacity: 0;
+}
+.avatar:hover .fileUpload {
+	opacity: 1;
+}
+.profileImg {
 	position: absolute;
 	left: 50%;
 	bottom: 20%;
@@ -20,6 +25,20 @@
 	height: 130px;
 	border-radius: 50%;
 	background-color: #cccccc;
+}
+
+.fileUpload {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	cursor: pointer;
+}
+.fileUpload input[type="file"] {
+	display: none;
+}
+.fileUploadCustom img {
+	width: 20px;
+	height: 20px;
 }
 
 .name {
