@@ -1,4 +1,5 @@
 import {profileAPI} from '../api/api';
+import { stopSubmit } from 'redux-form';
 
 const ADD_POST = 'samurai-network/profile/ADD-POST';
 const SET_USERS_PROFILE = 'samurai-network/profile/SET_USERS_PROFILE';
@@ -49,7 +50,6 @@ const profileReducer = (state = initialState, action) => {
 			}
 		}
 		case SET_PHOTO_SUCCESS: {
-			debugger;
 			return {
 				...state,
 				profile: {...state.profile, photos: action.photos}
@@ -69,21 +69,16 @@ export const setPhotoSuccess = (photos) => ({type: SET_PHOTO_SUCCESS, photos});
 
 export const getProfile = (userId) => async (dispatch) => {
 	let data = await profileAPI.getProfileUser(userId);
-		
 	dispatch(setUsersProfile(data));
-		
 }
 
 export const getStatus = (userId) => async (dispatch) => {
 	let data = await profileAPI.getStatus(userId);
-		
 	dispatch(setStatus(data));
-		
 }
 
 export const updateStatus = (status) => async (dispatch) => {
 	let data = await profileAPI.updateStatus(status);
-		
 	if(data.resultCode === 0) {
 		dispatch(setStatus(status));
 	}
@@ -91,9 +86,19 @@ export const updateStatus = (status) => async (dispatch) => {
 
 export const savePhoto = (file) => async (dispatch) => {
 	let data = await profileAPI.savePhoto(file);
-		
 	if(data.resultCode === 0) {
 		dispatch(setPhotoSuccess(data.photos));
+	}
+}
+
+export const saveProfile = (profile) => async (dispatch, getState) => {
+	const userId = getState().auth.userId;
+	let data = await profileAPI.saveProfile(profile);
+	if(data.resultCode === 0) {
+		dispatch(getProfile(userId));
+	} else {
+		dispatch(stopSubmit('edit-profile', {_error: data.data.messages[0]}));
+		// return Promise.reject(data.data.messages[0]);
 	}
 }
 

@@ -10,6 +10,12 @@
 	width: 100%;
 	height: 250px;
 }
+
+.socials img {
+	width: 45px;
+	height: 45px;
+}
+
 .avatar .fileUpload {
 	opacity: 0;
 }
@@ -48,13 +54,48 @@
 
 .info {
 	display: grid;
-	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
 	align-items: center;
+	justify-items: center;
 }
 
 .status {
 	position: absolute;
-	left: 10px;
-	bottom: 30%;
+	left: 30px;
+	bottom: 35%;
 	color: #ffffff;
+}
+
+.jobStatus {
+	display: flex;
+	align-items: center;
+}
+.jobStatus img {
+	width: 35px;
+	height: 35px;
+	margin-left: 10px;
+}
+
+.editBtn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 40px;
+	height: 40px;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.editBtn img {
+	width: 100%;
+}
+
+.editForm {
+	padding: 20px;
+}
+
+.formControl {
+	display: flex;
+	margin: 5px 0;
 }
