@@ -30,9 +30,11 @@ const ProfileInfo = (props) => {
 	}
 
 	const onSubmit = (formData) => {
-		props.saveProfile(formData).then(() => {
-			setEditMode(false);
-		});
+		props.saveProfile(formData).then(
+			() => {
+                setEditMode(false);
+            }
+		);
 	}
 
 	return(
