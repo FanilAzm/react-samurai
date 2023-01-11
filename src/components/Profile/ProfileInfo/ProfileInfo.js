@@ -15,7 +15,6 @@ import iconEdit from '../../../assets/images/icon-edit.png';
 import ProfileStatusWithHooks from './ProfileStatus/ProfileStatus';
 import ProfileDataReduxForm from './ProfileDataForm';
 
-
 const ProfileInfo = (props) => {
 	const [editMode, setEditMode] = useState(false);
 
@@ -42,7 +41,7 @@ const ProfileInfo = (props) => {
 			<div className={s.header}>
 				<img className={s.headerImg} src="https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300" />
 				{
-					editMode 
+					editMode
 					? <ProfileDataReduxForm onSubmit={onSubmit} initialValues={props.profile} profile={props.profile} />
 					: <ProfileData
 							isOwner={props.isOwner}
@@ -85,7 +84,7 @@ const ProfileData = (props) => {
 				<div className={s.avatar}>
 					<img className={s.profileImg} src={props.profile.photos.large || userPhoto} />
 					{
-						props.isOwner && 
+						props.isOwner &&
 						<label className={s.fileUpload}>
 							<input type={"file"} onChange={props.onMainPhotosSelected} />
 							<div className={s.fileUploadCustom}>

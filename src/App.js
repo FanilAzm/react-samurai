@@ -55,7 +55,7 @@ class App extends React.Component {
               />
               <Route
                 path="/users"
-                render={ () => <UsersContainer/>}  
+                render={ () => <UsersContainer pageTitle="Самураи" />}
               />
               <Route path="/news" component={News}/>
               <Route path="/music" component={Music}/>
@@ -63,7 +63,7 @@ class App extends React.Component {
               <Route path="/login" component={Login}/>
               <Route
                 path="*"
-                render={ () => <div>404 NotFound</div>}  
+                render={ () => <div>404 NotFound</div>}
               />
             </Switch>
           </div>

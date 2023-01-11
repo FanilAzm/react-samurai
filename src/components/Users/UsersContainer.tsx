@@ -6,21 +6,46 @@ import Preloader from '../common/Preloader/Preloader';
 import withAuthRedirect from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { getUsersSelector, getPageSizeSelector, getTotalUsersCount, getCurrentUserPage, getIsFetching, getFollowingProgress } from '../../redux/selectors/users-selectors';
+import {UserType} from "../../types/types";
+import {AppStoreType} from "../../redux/redux-store";
 
-class UsersContainer extends React.Component {
+type MapStatePropsType = {
+  currentUserPage: number
+  pageSize: number
+  isFetching: boolean
+  totalUsersCount: number
+  users: Array<UserType>
+  followingProgress: Array<number>
+}
+
+type MapDispatchPropsType = {
+  follow: () => void
+  unfollow: () => void
+  setCurrentPage: (page: number) => void
+  getUsers: (currentUserPage: number, pageSize: number) => void
+}
+
+type OwnPropsType = {
+  pageTitle: string
+}
+
+type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
+
+class UsersContainer extends React.Component<PropsType> {
 	componentDidMount() {
 		this.props.getUsers(this.props.currentUserPage, this.props.pageSize);
 	}
-	onPageChanged = (page) => {
+	onPageChanged = (page: number) => {
 		this.props.setCurrentPage(page);
 		this.props.getUsers(page, this.props.pageSize);
 	}
 	render() {
 		return (
 			<>
+        <h2>{this.props.pageTitle}</h2>
 				{this.props.isFetching ? < Preloader/> : null}
-				<Users 
-					{...this.props} 
+				<Users
+					{...this.props}
 					// totalUsersCount={this.props.totalUsersCount}
 					// pageSize={this.props.pageSize}
 					// currentUserPage={this.props.currentUserPage}
@@ -47,7 +72,7 @@ class UsersContainer extends React.Component {
 // 	}
 // }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStoreType): MapStatePropsType => {
 	return {
 		users: getUsersSelector(state),
 		pageSize: getPageSizeSelector(state),
@@ -81,14 +106,14 @@ const mapStateToProps = (state) => {
 // 	}
 // }
 
-/* 
+/*
 	Т.к. в mapDispatchToProps содержимые объекта взаимопохожи,
   можно их вызвать в самой ф-ии connect, в виде объекта,
   и название action creator-ов должны совпадать с props-ми
 */
 
 export default compose(
-	connect(mapStateToProps, { follow, unfollow, setCurrentPage, getUsers }),
+	connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStoreType>(mapStateToProps, { follow, unfollow, setCurrentPage, getUsers }),
 	withAuthRedirect
 )(UsersContainer);
 
