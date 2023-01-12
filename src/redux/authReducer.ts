@@ -5,7 +5,7 @@ const SET_AUTH_USER_DATA = 'samurai-network/auth/SET_AUTH_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL_SUCCESS';
 
 const initialState = {
-	id: null as number | null,
+  userId: null as number | null,
 	login: null as string | null,
 	email: null as string | null,
 	isAuth: false,
