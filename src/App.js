@@ -55,7 +55,7 @@ class App extends React.Component {
               />
               <Route
                 path="/users"
-                render={ () => <UsersContainer pageTitle="Самураи" />}
+                render={ () => <UsersContainer pageTitle={"Самураи"} />}
               />
               <Route path="/news" component={News}/>
               <Route path="/music" component={Music}/>

@@ -19,9 +19,8 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-  follow: () => void
-  unfollow: () => void
-  setCurrentPage: (page: number) => void
+  follow: (userId: number) => void
+  unfollow: (userId: number) => void
   getUsers: (currentUserPage: number, pageSize: number) => void
 }
 
@@ -33,10 +32,10 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 
 class UsersContainer extends React.Component<PropsType> {
 	componentDidMount() {
-		this.props.getUsers(this.props.currentUserPage, this.props.pageSize);
+	  const {currentUserPage, pageSize} = this.props;
+		this.props.getUsers(currentUserPage, pageSize);
 	}
 	onPageChanged = (page: number) => {
-		this.props.setCurrentPage(page);
 		this.props.getUsers(page, this.props.pageSize);
 	}
 	render() {
@@ -112,8 +111,8 @@ const mapStateToProps = (state: AppStoreType): MapStatePropsType => {
   и название action creator-ов должны совпадать с props-ми
 */
 
-export default compose(
-	connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStoreType>(mapStateToProps, { follow, unfollow, setCurrentPage, getUsers }),
+export default compose<React.Component>(
+	connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStoreType>(mapStateToProps, { follow, unfollow, getUsers }),
 	withAuthRedirect
 )(UsersContainer);
 
