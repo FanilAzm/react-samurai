@@ -1,4 +1,4 @@
-const ADD_MESSAGE = 'samurai-network/dialogs/ADD-MESSAGE';
+import {InferActionTypes} from "./redux-store";
 
 type DialogType = {
   id: number
@@ -25,10 +25,11 @@ let initialState = {
 }
 
 export type InitialStateType = typeof initialState
+type ActionsTypes = InferActionTypes<typeof actions>
 
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 	switch(action.type) {
-		case ADD_MESSAGE: {
+		case 'ADD_MESSAGE': {
 			let body = action.newMessageText;
 
 			return {
@@ -42,11 +43,8 @@ const dialogsReducer = (state = initialState, action: any): InitialStateType => 
 	}
 }
 
-type addMessageActionCreatorType = {
-  type: typeof ADD_MESSAGE
-  newMessageText: string
+export const actions = {
+  addMessageActionCreator: (newMessageText: string) => ({type: 'ADD_MESSAGE', newMessageText} as const)
 }
-
-export const addMessageActionCreator = (newMessageText: string): addMessageActionCreatorType => ({type: ADD_MESSAGE, newMessageText});
 
 export default dialogsReducer;

@@ -1,18 +1,16 @@
 import { getAuthUserData } from "./authReducer";
+import {InferActionTypes} from "./redux-store";
 
-const SET_INITIALIZED = 'samurai-network/app/SET_INITIALIZED';
-
-type InitialStateType = {
-  initialized: boolean
-}
-
-const initialState: InitialStateType = {
+const initialState = {
 	initialized: false
 }
 
-const appReducer = (state = initialState, action: any): InitialStateType => {
+type InitialStateType = typeof initialState
+type ActionsTypes = InferActionTypes<typeof actions>
+
+const appReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 	switch(action.type) {
-		case SET_INITIALIZED: {
+		case 'SET_INITIALIZED': {
 			return {
 				...state,
 				initialized: true
@@ -24,18 +22,16 @@ const appReducer = (state = initialState, action: any): InitialStateType => {
 	}
 }
 
-type InitializedAppActionType = {
-  type: typeof SET_INITIALIZED
+const actions = {
+  initializedApp: () => ({type: 'SET_INITIALIZED'} as const)
 }
-
-export const initializedApp = (): InitializedAppActionType => ({type: SET_INITIALIZED})
 
 export const initialized = () => (dispatch: any) => {
 	const promise = dispatch(getAuthUserData());
 
 	Promise.all([promise])
 		.then(() => {
-			dispatch(initializedApp());
+			dispatch(actions.initializedApp());
 		})
 }
 

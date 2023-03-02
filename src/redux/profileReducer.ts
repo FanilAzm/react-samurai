@@ -1,8 +1,7 @@
 import {ResultCodesEnum} from '../api/api';
 import {FormAction, stopSubmit} from 'redux-form';
 import {PhotosType, PostType, ProfileType} from "../types/types";
-import {ThunkAction} from "redux-thunk";
-import {AppStoreType, InferActionTypes} from "./redux-store";
+import {BaseThunkType, InferActionTypes} from "./redux-store";
 import {profileAPI} from "../api/profile-api";
 
 let initialState = {
@@ -16,6 +15,8 @@ let initialState = {
 }
 
 export type InitialStateType = typeof initialState
+type ActionsTypes = InferActionTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsTypes | FormAction>
 
 const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 	switch(action.type) {
@@ -62,8 +63,6 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
 	}
 }
 
-type ActionsTypes = InferActionTypes<typeof actions>
-
 export const actions = {
   addPostActionCreator: (newPostText: string) => ({type: 'ADD_POST', newPostText} as const),
   setUsersProfile: (profile: ProfileType) => ({type: 'SET_USERS_PROFILE', profile} as const),
@@ -71,8 +70,6 @@ export const actions = {
   deletePostActionCreator: (postId: number) => ({type: 'DELETE_POST', postId} as const),
   setPhotoSuccess: (photos: PhotosType) => ({type: 'SET_PHOTO_SUCCESS', photos} as const)
 }
-
-type ThunkType = ThunkAction<Promise<void>, AppStoreType, unknown, ActionsTypes | FormAction>
 
 export const getProfile = (userId: number): ThunkType => async (dispatch) => {
 	const data = await profileAPI.getProfileUser(userId);
