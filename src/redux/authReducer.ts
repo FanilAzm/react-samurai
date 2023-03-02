@@ -1,13 +1,15 @@
 import {FormAction, stopSubmit} from 'redux-form';
-import {authAPI, ResulCodeForCaptcha, ResultCodesEnum, securityAPI} from '../api/api';
+import {ResulCodeForCaptcha, ResultCodesEnum} from '../api/api';
 import {ThunkAction} from "redux-thunk";
 import {AppStoreType} from "./redux-store";
+import {authAPI} from "../api/auth-api";
+import {securityAPI} from "../api/security-api";
 
 const SET_AUTH_USER_DATA = 'samurai-network/auth/SET_AUTH_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL_SUCCESS';
 
 const initialState = {
-  userId: null as number | null,
+  id: null as number | null,
 	login: null as string | null,
 	email: null as string | null,
 	isAuth: false,
@@ -88,8 +90,8 @@ export const logout = (): ThunkType => async (dispatch) => {
 }
 
 export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
-	const response = await securityAPI.getCaptchaUrl()
-	const captchaUrl = response.data.url;
+	const data = await securityAPI.getCaptchaUrl()
+	const captchaUrl = data.url;
 	dispatch(getCaptchaUrlSuccess(captchaUrl));
 }
 

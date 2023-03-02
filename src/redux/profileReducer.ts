@@ -1,8 +1,9 @@
-import {profileAPI, ResultCodesEnum} from '../api/api';
+import {ResultCodesEnum} from '../api/api';
 import {FormAction, stopSubmit} from 'redux-form';
 import {PhotosType, PostType, ProfileType} from "../types/types";
 import {ThunkAction} from "redux-thunk";
 import {AppStoreType, InferActionTypes} from "./redux-store";
+import {profileAPI} from "../api/profile-api";
 
 let initialState = {
 	posts: [
@@ -46,7 +47,7 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
 		case 'DELETE_POST': {
 			return {
 				...state,
-				posts: state.posts.filter(p => p.id != action.postId)
+				posts: state.posts.filter(p => p.id !== action.postId)
 			}
 		}
 		case 'SET_PHOTO_SUCCESS': {
@@ -74,7 +75,7 @@ export const actions = {
 type ThunkType = ThunkAction<Promise<void>, AppStoreType, unknown, ActionsTypes | FormAction>
 
 export const getProfile = (userId: number): ThunkType => async (dispatch) => {
-	let data = await profileAPI.getProfileUser(userId);
+	const data = await profileAPI.getProfileUser(userId);
 	dispatch(actions.setUsersProfile(data));
 }
 
@@ -93,16 +94,16 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
 export const savePhoto = (file: File): ThunkType => async (dispatch) => {
 	let data = await profileAPI.savePhoto(file);
 	if(data.resultCode === ResultCodesEnum.Success) {
-		dispatch(actions.setPhotoSuccess(data.photos));
+		dispatch(actions.setPhotoSuccess(data.data.photos));
 	}
 }
 
 export const saveProfile = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
-	const userId = getState().auth.userId;
+	const userId = getState().auth.id;
 	let data = await profileAPI.saveProfile(profile);
 
 	if(data.resultCode === ResultCodesEnum.Success) {
-    if (userId != null) {
+    if (userId !== null) {
       dispatch(getProfile(userId));
     } else {
       throw new Error("userId can't be null")
