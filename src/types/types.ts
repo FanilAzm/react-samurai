@@ -22,11 +22,12 @@ export type PhotosType = {
 
 export type ProfileType = {
   userId: number
-  lookingForAJob: boolean
-  lookingForAJobDescription: string
+  lookingForAJob?: boolean
+  lookingForAJobDescription?: string
   fullName: string
   contacts: ContactsType
   photos: PhotosType
+  aboutMe: string
 }
 
 export type UserType = {
@@ -35,4 +36,9 @@ export type UserType = {
   status: string
   photos: PhotosType
   followed: boolean
+}
+
+export type FriendType = {
+  id: number
+  name: string
 }

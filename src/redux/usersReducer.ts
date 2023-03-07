@@ -100,7 +100,6 @@ export const getUsers = (currentUserPage: number, pageSize: number): ThunkType =
 	dispatch(actions.setUsers(data.items));
 	dispatch(actions.setUsersCount(data.totalCount));
 	dispatch(actions.toggleIsFetching(false));
-
 }
 
 const _followUnfollowFlow = async (

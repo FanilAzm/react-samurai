@@ -45,31 +45,12 @@ class UsersContainer extends React.Component<PropsType> {
 				{this.props.isFetching ? < Preloader/> : null}
 				<Users
 					{...this.props}
-					// totalUsersCount={this.props.totalUsersCount}
-					// pageSize={this.props.pageSize}
-					// currentUserPage={this.props.currentUserPage}
-					// users={this.props.users}
-					// follow={this.props.follow}
-					// unfollow={this.props.unfollow}
 					onPageChanged={this.onPageChanged}
-					// followingProgress={this.props.followingProgress}
-					// toggleFollowingProgress={this.props.toggleFollowingProgress}
 				/>
 			</>
 		)
 	}
 }
-
-// const mapStateToProps = (state) => {
-// 	return {
-// 		users: state.usersPage.users,
-// 		pageSize: state.usersPage.pageSize,
-// 		totalUsersCount: state.usersPage.totalUsersCount,
-// 		currentUserPage: state.usersPage.currentUserPage,
-// 		isFetching: state.usersPage.isFetching,
-// 		followingProgress: state.usersPage.followingProgress
-// 	}
-// }
 
 const mapStateToProps = (state: AppStoreType): MapStatePropsType => {
 	return {
@@ -82,39 +63,7 @@ const mapStateToProps = (state: AppStoreType): MapStatePropsType => {
 	}
 }
 
-// const mapDispatchToProps = (dispatch) => {
-// 	return {
-// 		follow: (userId) => {
-// 			dispatch(followAC(userId))
-// 		},
-// 		unfollow: (userId) => {
-// 			dispatch(unfollowAC(userId))
-// 		},
-// 		setUsers: (users) => {
-// 			dispatch(setUsersAC(users));
-// 		},
-// 		setCurrentPage: (pageNumber) => {
-// 			dispatch(setCurrentPageAC(pageNumber))
-// 		},
-// 		setUsersCount: (usersCount) => {
-// 			dispatch(setUsersCountAC(usersCount))
-// 		},
-// 		toggleIsFetching: (isFetching) => {
-// 			dispatch(toggleIsFetchingAC(isFetching))
-// 		}
-// 	}
-// }
-
-/*
-	Т.к. в mapDispatchToProps содержимые объекта взаимопохожи,
-  можно их вызвать в самой ф-ии connect, в виде объекта,
-  и название action creator-ов должны совпадать с props-ми
-*/
-
-export default compose<React.Component>(
-	connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStoreType>(mapStateToProps, { follow, unfollow, getUsers }),
+export default compose<React.ComponentType>(
+	connect(mapStateToProps, { follow, unfollow, getUsers }),
 	withAuthRedirect
 )(UsersContainer);
-
-// const AuthRedirectComponent = withAuthRedirect(UsersContainer);
-// export default connect(mapStateToProps, { follow, unfollow, setCurrentPage, getUsers })(AuthRedirectComponent);

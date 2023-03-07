@@ -10,8 +10,7 @@ let initialState = {
 		{id: 2, message: "It's my first post", likeCount: 20}
 	] as Array<PostType>,
 	profile: null as ProfileType | null,
-	status: '',
-  newPostText: ''
+	status: ''
 }
 
 export type InitialStateType = typeof initialState
@@ -29,7 +28,6 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
 
 			return {
 				...state,
-				newPostText: '',
 				posts: [...state.posts, newPost]
 			};
 		}
@@ -64,10 +62,10 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
 }
 
 export const actions = {
-  addPostActionCreator: (newPostText: string) => ({type: 'ADD_POST', newPostText} as const),
+  addPost: (newPostText: string) => ({type: 'ADD_POST', newPostText} as const),
   setUsersProfile: (profile: ProfileType) => ({type: 'SET_USERS_PROFILE', profile} as const),
   setStatus: (status: string) => ({type: 'SET_STATUS', status} as const),
-  deletePostActionCreator: (postId: number) => ({type: 'DELETE_POST', postId} as const),
+  deletePost: (postId: number) => ({type: 'DELETE_POST', postId} as const),
   setPhotoSuccess: (photos: PhotosType) => ({type: 'SET_PHOTO_SUCCESS', photos} as const)
 }
 
